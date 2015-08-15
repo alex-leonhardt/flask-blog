@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+{% extends "base.html.j2" %}
+<body>
+
+    {% block topnav %}
+    {% endblock %}
+
+    {% block head %}
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+
+    <header class="intro-header" style="background-image: url({{ url_for('static',filename='img/home-bg.jpg') }})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>{{ post_name }}</h1>
+                        <h2 class="subheading">{{ sub_heading }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    {% block content %}
+
+    <article>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        {{ post
+                        | safe
+                        | replace('<h2>', '<h2 class="section-heading">')
+                        | replace('<h3>', '<h3 class="post-subtitle">')
+                         }}
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+</body>
+
+</html>

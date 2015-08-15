@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html.j2" %}
+<body>
+
+    {% block topnav %}
+    {% endblock %}
+
+    {% block head %}
+    {% endblock %}
+
+    {% block content %}
+    <!-- Main Content -->
+
+    <!-- Main Content -->
+    <div class="container">
+    <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <div class="post-preview">
+
+    {{ content
+    | safe
+    | replace('<h2>', '<h2 class="post-title">')
+    | replace('<h3>', '<h3 class="post-subtitle">')
+     }}
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+</body>
+
+</html>
