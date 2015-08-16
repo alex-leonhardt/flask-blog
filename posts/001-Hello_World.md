@@ -39,18 +39,14 @@ will we log "anything".
 
 ### Settings
 
-There are several settings you should update within blog.py : 
+There are several settings you should update within ```conf/blog.yaml```: 
 
-
-    COPYRIGHT='MY_BLOG'
-    BLOG_NAME='MY_BLOG'
-    SUB_HEADING='A blog that\'s out of this world.'
-    ABOUT_HEADING='About me'
-    ABOUT_SUB='Just a another geek with another blog.'
-    TWITTER_LINK=''
-    FACEBOOK_LINK=''
-    GITHUB_LINK=''
-    default_cache_timeout = 2678400 # 31 days
-
-
-
+    copyright: "MY BLOG"
+    blog_name: "MY BLOG"
+    sub_heading: "A blog that's out of this world."
+    about_heading: "About me"
+    about_sub: "Just a another geek with another blog."
+    twitter_link: ""
+    facebook_link: ""
+    github_link: ""
+    default_cache_timeout: 2678400

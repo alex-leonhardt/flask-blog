@@ -6,24 +6,32 @@ from flask.ext.cache import Cache
 import logging
 import os
 import re
+from reverseproxied import ReverseProxied
+import blogconfig
+
 
 BASE_DIR=os.path.dirname(os.path.abspath(__file__))
 POSTS_DIR='{0}/posts'.format(BASE_DIR)
 
-COPYRIGHT='MY_BLOG'
-BLOG_NAME='MY_BLOG'
-SUB_HEADING='A blog that\'s out of this world.'
-ABOUT_HEADING='About me'
-ABOUT_SUB='Just a another geek with another blog.'
-
-TWITTER_LINK=''
-FACEBOOK_LINK=''
-GITHUB_LINK=''
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+app.wsgi_app = ReverseProxied(app.wsgi_app)
 
-default_cache_timeout = 2678400 # 31 days
+myconfig = blogconfig.ProdConfig
+app.config.from_object(myconfig)
+
+COPYRIGHT=app.config['BLOG_CONFIG']['copyright']
+BLOG_NAME=app.config['BLOG_CONFIG']['blog_name']
+SUB_HEADING=app.config['BLOG_CONFIG']['sub_heading']
+ABOUT_HEADING=app.config['BLOG_CONFIG']['about_heading']
+ABOUT_SUB=app.config['BLOG_CONFIG']['about_sub']
+
+TWITTER_LINK=app.config['BLOG_CONFIG']['twitter_link']
+FACEBOOK_LINK=app.config['BLOG_CONFIG']['facebook_link']
+GITHUB_LINK=app.config['BLOG_CONFIG']['github_link']
+
+default_cache_timeout = app.config['BLOG_CONFIG']['default_cache_timeout']
 
 def unsanitize(s):
     s = re.sub('\ ', '_', s)
@@ -190,7 +198,12 @@ def page_not_found(error):
                            copy=COPYRIGHT,
                            heading=BLOG_NAME,
                            sub_heading=SUB_HEADING,
-                           blog_name=BLOG_NAME), 404
+                           blog_name=BLOG_NAME), error
+
+
+@app.route('/healthcheck')
+def healthcheck():
+    return 'App is up', 200
 
 
 if __name__ == '__main__':
