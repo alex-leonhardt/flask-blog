@@ -4,7 +4,10 @@ blog_name: "MY BLOG"
 sub_heading: "A blog that's out of this world."
 about_heading: "About me"
 about_sub: "Just a another geek with another blog."
-twitter_link: ""
-facebook_link: ""
-github_link: ""
+twitter_link: "//twitter.com"
+facebook_link: "//facebook.com"
+github_link: "//github.com"
 default_cache_timeout: 2678400
+home_img: 'img/home-bg.jpg'
+about_img: 'img/about-bg.jpg'
+posts_img: 'img/post-bg.jpg'

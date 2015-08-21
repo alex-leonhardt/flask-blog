@@ -27,9 +27,14 @@ SUB_HEADING=app.config['BLOG_CONFIG']['sub_heading']
 ABOUT_HEADING=app.config['BLOG_CONFIG']['about_heading']
 ABOUT_SUB=app.config['BLOG_CONFIG']['about_sub']
 
-TWITTER_LINK=app.config['BLOG_CONFIG']['twitter_link']
-FACEBOOK_LINK=app.config['BLOG_CONFIG']['facebook_link']
-GITHUB_LINK=app.config['BLOG_CONFIG']['github_link']
+HOME_IMG = app.config['BLOG_CONFIG']['home_img']
+ABOUT_IMG = app.config['BLOG_CONFIG']['about_img']
+POSTS_IMG = app.config['BLOG_CONFIG']['posts_img']
+
+links = {}
+links['twitter'] = app.config['BLOG_CONFIG']['twitter_link']
+links['facebook'] = app.config['BLOG_CONFIG']['facebook_link']
+links['github'] = app.config['BLOG_CONFIG']['github_link']
 
 default_cache_timeout = app.config['BLOG_CONFIG']['default_cache_timeout']
 
@@ -125,7 +130,7 @@ for p in reversed(cached_posts):
     avail_posts.append(p)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 @cache.cached(timeout=default_cache_timeout)
 def index():
     # only return latest 5 posts
@@ -134,9 +139,11 @@ def index():
                            copy=COPYRIGHT,
                            blog_name=BLOG_NAME,
                            heading=BLOG_NAME,
-                           sub_heading=SUB_HEADING)
+                           sub_heading=SUB_HEADING,
+                           head_img=HOME_IMG,
+                           links=links)
 
-@app.route('/about/')
+@app.route('/about/', methods=['GET'])
 @cache.cached(timeout=default_cache_timeout)
 def about():
     with open(BASE_DIR + '/about.md') as f:
@@ -149,9 +156,11 @@ def about():
                            copy=COPYRIGHT,
                            blog_name=BLOG_NAME,
                            heading=ABOUT_HEADING,
-                           sub_heading=ABOUT_SUB)
+                           sub_heading=ABOUT_SUB,
+                           head_img=ABOUT_IMG,
+                           links=links)
 
-@app.route('/posts/')
+@app.route('/posts/', methods=['GET'])
 @cache.cached(timeout=default_cache_timeout)
 def posts():
     return render_template('posts.html.j2',
@@ -159,10 +168,12 @@ def posts():
                            copy=COPYRIGHT,
                            blog_name=BLOG_NAME,
                            heading=BLOG_NAME,
-                           sub_heading=SUB_HEADING)
+                           sub_heading=SUB_HEADING,
+                           head_img=POSTS_IMG,
+                           links=links)
 
 
-@app.route('/post/<post>')
+@app.route('/post/<post>', methods=['GET'])
 @cache.cached(timeout=default_cache_timeout)
 def post(post):
     post = unsanitize(post)
@@ -186,7 +197,9 @@ def post(post):
                            copy=COPYRIGHT,
                            blog_name=BLOG_NAME,
                            heading=meta['title'],
-                           sub_heading=meta['sub-title'])
+                           sub_heading=meta['sub-title'],
+                           head_img=POSTS_IMG,
+                           links=links)
 
 
 @app.errorhandler(404)
@@ -198,10 +211,12 @@ def page_not_found(error):
                            copy=COPYRIGHT,
                            heading=BLOG_NAME,
                            sub_heading=SUB_HEADING,
-                           blog_name=BLOG_NAME), error
+                           blog_name=BLOG_NAME,
+                           head_img=POSTS_IMG,
+                           links=links), error
 
 
-@app.route('/healthcheck')
+@app.route('/healthcheck', methods=['GET'])
 def healthcheck():
     return 'App is up', 200
 
@@ -212,4 +227,4 @@ if __name__ == '__main__':
     handler.setLevel(logging.WARN)
     handler.setFormatter(formatter)
     app.logger.addHandler(handler)
-    app.run(debug=True)
+    app.run()
