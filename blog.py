@@ -26,6 +26,8 @@ BLOG_NAME=app.config['BLOG_CONFIG']['blog_name']
 SUB_HEADING=app.config['BLOG_CONFIG']['sub_heading']
 ABOUT_HEADING=app.config['BLOG_CONFIG']['about_heading']
 ABOUT_SUB=app.config['BLOG_CONFIG']['about_sub']
+POSTS_HEADING=app.config['BLOG_CONFIG']['posts_heading']
+POSTS_SUB=app.config['BLOG_CONFIG']['posts_sub']
 
 HOME_IMG = app.config['BLOG_CONFIG']['home_img']
 ABOUT_IMG = app.config['BLOG_CONFIG']['about_img']
@@ -167,8 +169,8 @@ def posts():
                            posts=avail_posts,
                            copy=COPYRIGHT,
                            blog_name=BLOG_NAME,
-                           heading=BLOG_NAME,
-                           sub_heading=SUB_HEADING,
+                           heading=POSTS_HEADING,
+                           sub_heading=POSTS_SUB,
                            head_img=POSTS_IMG,
                            links=links)
 
@@ -209,8 +211,8 @@ def page_not_found(error):
                            msg='Sorry, that blog post was not found. Please select a post from below.',
                            posts=avail_posts,
                            copy=COPYRIGHT,
-                           heading=BLOG_NAME,
-                           sub_heading=SUB_HEADING,
+                           heading=POSTS_HEADING,
+                           sub_heading=POSTS_SUB,
                            blog_name=BLOG_NAME,
                            head_img=POSTS_IMG,
                            links=links), error
