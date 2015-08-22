@@ -40,12 +40,12 @@ default_cache_timeout = app.config['BLOG_CONFIG']['default_cache_timeout']
 
 def unsanitize(s):
     s = re.sub('\ ', '_', s)
-    s = re.sub('\+', '_', s)
+    s = re.sub('\-', '_', s)
     return s
 
 
 def sanitize(s):
-    s = s.split('-')[1]
+    s = s.split('+')[1]
     s = s.split('.')[0]
     return s
 
@@ -57,7 +57,7 @@ def create_post_cache():
         post_title = sanitize(post)
         with open(os.path.join(POSTS_DIR, post)) as f:
             _post_title = post_title
-            post_title = re.sub('_', ' ', post_title)
+            post_title = re.sub('_', '-', post_title)
             p_dict = {}
             p_dict['name'] = post_title
             p_content = f.read()
