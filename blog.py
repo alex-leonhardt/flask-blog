@@ -45,7 +45,7 @@ def unsanitize(s):
 
 
 def sanitize(s):
-    s = s.split('+')[1]
+    s = s.split('-')[1]
     s = s.split('.')[0]
     return s
 
