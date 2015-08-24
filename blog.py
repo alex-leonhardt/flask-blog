@@ -184,6 +184,7 @@ def post(post):
         meta, current_post = get_cached_item(post)
     except Exception:
         return page_not_found(404)
+
     current_post = re.sub('#\ *.*\n', '', current_post, count=1)
     current_post = re.sub('\n##\ *.*\n', '', current_post, count=1)
     post = Markup(markdown.markdown(current_post))
@@ -215,7 +216,7 @@ def page_not_found(error):
                            sub_heading=POSTS_SUB,
                            blog_name=BLOG_NAME,
                            head_img=POSTS_IMG,
-                           links=links), error
+                           links=links), 404
 
 
 @app.route('/healthcheck', methods=['GET'])
