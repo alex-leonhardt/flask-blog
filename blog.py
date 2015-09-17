@@ -21,6 +21,12 @@ app.wsgi_app = ReverseProxied(app.wsgi_app)
 myconfig = blogconfig.ProdConfig
 app.config.from_object(myconfig)
 
+handler = logging.FileHandler(BASE_DIR + '/log/flask-blog.log')
+formatter = logging.Formatter('{"time": "%(asctime)s", "level": "%(levelname)s", "message": "%(message)s"}')
+handler.setLevel(logging.WARN)
+handler.setFormatter(formatter)
+app.logger.addHandler(handler)
+
 COPYRIGHT=app.config['BLOG_CONFIG']['copyright']
 BLOG_NAME=app.config['BLOG_CONFIG']['blog_name']
 SUB_HEADING=app.config['BLOG_CONFIG']['sub_heading']
@@ -225,9 +231,4 @@ def healthcheck():
 
 
 if __name__ == '__main__':
-    handler = logging.FileHandler(BASE_DIR + '/log/flask-blog.log')
-    formatter = logging.Formatter('{"time": "%(asctime)s", "level": "%(levelname)s", "message": "%(message)s"}')
-    handler.setLevel(logging.WARN)
-    handler.setFormatter(formatter)
-    app.logger.addHandler(handler)
     app.run()
