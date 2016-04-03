@@ -112,9 +112,6 @@ def get_cached_item(post):
                             break
                     cache.set(_post_title, p_content, timeout=default_cache_timeout)
                     return p_dict, p_content
-            else:
-                app.logger.warn('{0} not found.'.format(u_post))
-                return None
 
     p_dict = {}
     post_title = re.sub('_', ' ', u_post)
